@@ -64,8 +64,8 @@
       <div class="topbar w-full h-[8%] flex-none border-b-4 border-cyan-800 ">
         <div class="wrap w-[95%] h-full m-auto relative">
           <div class="form flex items-center absolute top-1/2 -translate-y-1/2 px-3 rounded-md border-2 border-cyan-800 ">
-            <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500 pr-2"/>
-            <input type="text" class="bg-transparent focus:outline-none py-1 text-slate-600"/>
+            <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500 pr-2" />
+            <input type="text" class="bg-transparent focus:outline-none py-1 text-slate-600" v-model="searchitem"/>
           </div>
           <div class="usericon flex items-center absolute top-1/2 -translate-y-1/2 right-0">
             <div class="icon px-4">
@@ -78,10 +78,15 @@
         </div>
       </div>
       <div class="midbar h-[87%] overflow-y-auto">
-        <div class="wrap m-auto py-[20px] w-[95%]">
+        <div class="wrap m-auto py-[20px] w-[95%] relative">
           <div class="text">
-            <span class="text-gray-500">Dashboard</span>
+            <span class="text-gray-500">Dashboard{{newname}}</span>
             <fa :icon='["fas" , "angle-right"]' class="px-2 text-cyan-800"/>
+            <div class="addbar flex items-center bg-white absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden ">
+              <label for="adduser" class="px-2 text-cyan-800">New User</label>
+              <input type="text" id="adduser" class="focus:outline-none pr-2 py-1" v-model.lazy="newname">
+              <fa :icon='["fas" , "circle-plus"]' class="px-2 text-cyan-800 cursor-pointer bg-white "/>
+            </div>
           </div>
           <div class="items flex flex-col my-5 lg:flex-row ">
             <div class="item w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max ">
@@ -89,7 +94,7 @@
                 <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">1287.2</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{userapi.length}}</div>
                 <div class="text-slate-500 font-semibold">New Users</div>
               </div>
             </div>
@@ -123,13 +128,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="user in userapi" :key="user.id">
+                <tr v-for="user in showuser" :key="user.id">
                   <td class="text-slate-500 border-b border-gray-300 py-5">{{user.id.slice(0,2)}}</td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{user.username}}</td>
                   <td class="text-slate-500 border-b border-gray-300 ">Indianapolis</td>
                   <td class="text-slate-500 border-b border-gray-300  tracking-[1em]">
                     <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer mr-2"/>
-                    <fa :icon='["fas" , "trash-can"]' class="text-rose-800 cursor-pointer"/>
+                    <fa :icon='["fas" , "trash-can"]' @click="deluser(user.id)" class="text-rose-800 cursor-pointer"/>
                   </td>
                 </tr>
               </tbody>
@@ -162,7 +167,8 @@ export default {
     //             "username": this.newname
     //             })
     // await axios.delete("https://fiilm-back.herokuapp.com/user",{
-    //             data:{"username":123}
+    //             data: {"username": "",
+    //                   "id": this.delid}
     //             })
     await axios.get("https://fiilm-back.herokuapp.com/user")
                 .then( res => {
@@ -172,9 +178,19 @@ export default {
   },
   data(){
     return {
-    newname: '456',
-    userapi:[]
+    searchitem:'',
+    newname: '',
+    delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
+    userapi:[],
     }
+  },
+  computed:{
+    showuser(){
+      return this.userapi.filter( item => item.username.match(this.searchitem))
+    }
+  },
+  methods:{
+
   }
 }
 </script>
