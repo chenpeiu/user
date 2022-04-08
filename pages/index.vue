@@ -3,11 +3,11 @@
     <div class="sidebar_left w-1/6 bg-cyan-800 text-white px-4">
       <div class="logo text-center text-2xl py-5">
         <fa :icon='["fas" , "star-of-david"]' />
-        <span class="font-semibold">VueBord</span>
+        <span class="font-semibold font-['Lobster'] tracking-widest">VueBord</span>
       </div>
       <ul class="">General
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "heart"]' class="pr-3"/>
               <span>Dashboard</span>
             </li>
@@ -15,37 +15,37 @@
       </ul>
       <ul class="">Excampls
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "chess-queen"]' class="pr-3"/>
               <span>UI Element</span>
             </li>
           </a>
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "flag"]' class="pr-3"/>
               <span>Tables</span>
             </li>
           </a>
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "cloud-arrow-down"]' class="pr-3"/>
               <span>Forms</span>
             </li>
           </a>
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "comment-sms"]' class="pr-3"/>
               <span>Cards</span>
             </li>
           </a>
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "cubes"]' class="pr-3"/>
               <span>Blank</span>
             </li>
           </a>
           <a href="">
-            <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30">
+            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30">
               <fa :icon='["fas" , "elevator"]' class="pr-3"/>
               <span>Github</span>
            </li>
@@ -53,20 +53,18 @@
       </ul>
       <ul class="">About        
         <a href="">
-          <li class="pl-5 py-3 -mx-4 hover:bg-gray-200/30 ">
+          <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30 ">
             <fa :icon='["fas" , "file-circle-check"]' class="pr-3"/>
             <span>Model</span>
           </li>  
         </a>
       </ul>
     </div>
-    <div class="sidebar_right w-5/6 bg-slate-200">
-      <div class="searchbar relative w-full h-[8%] border-b-4 border-cyan-800">
-        <div class="form flex absolute top-1/2 -translate-y-1/2 ml-5 p-1 px-3 rounded-md border-2 border-cyan-800">
-          <div class="icon pr-3">
-            <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500"/>
-          </div>
-          <input type="text" class="focus:outline-none bg-transparent"/>
+    <div class="sidebar_right w-5/6 flex-col bg-slate-200">
+      <div class="searchbar relative w-full h-[8%] flex-none border-b-4 border-cyan-800 ">
+        <div class="form flex items-center absolute top-1/2 -translate-y-1/2 ml-5 px-3 rounded-md border-2 border-cyan-800 ">
+          <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500 pr-2"/>
+          <input type="text" class="bg-transparent focus:outline-none py-1 text-slate-600"/>
         </div>
         <div class="usericon flex absolute right-[10px] top-1/2 -translate-y-1/2">
           <div class="icon px-3">
@@ -77,8 +75,8 @@
           </div>
         </div>
       </div>
-      <div class="iconbar">
-        <div class="wrap m-auto mt-[20px] w-[95%]">
+      <div class="midbar h-[87%] overflow-y-scroll">
+        <div class="wrap m-auto my-[20px] w-[95%]">
           <div class="text">
             <span class="text-gray-500">Dashboard</span>
             <fa :icon='["fas" , "angle-right"]' class="px-2 text-cyan-800"/>
@@ -89,7 +87,7 @@
                 <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] ">1287.2</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">1287.2</div>
                 <div class="text-slate-500 font-semibold">New Users</div>
               </div>
             </div>
@@ -98,7 +96,7 @@
                 <fa :icon='["fas" , "circle-up"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-rose-600/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px]">728</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">728</div>
                 <div class="text-slate-500 font-semibold">Total Orders</div>
               </div>
             </div>
@@ -107,49 +105,35 @@
                 <fa :icon='["fas" , "circle-xmark"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px]">63</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">63</div>
                 <div class="text-slate-500 font-semibold">Available Products</div>
               </div>
             </div>
           </div>
           <div class="tablebar">
             <table class="w-full rounded-xl bg-white border-collapse text-center shadow">
-            <thead class="">
-              <tr>
-                <th class="border border-slate-300 py-2">User</th>
-                <th class="border border-slate-300">Tittle</th>
-                <th class="border border-slate-300">Status</th>
-                <th class="border border-slate-300">Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="border border-slate-300 py-3">Indiana</td>
-                <td class="border border-slate-300">Indianapolis</td>
-                <td class="border border-slate-300">Indianapolis</td>
-                <td class="border border-slate-300">Indianapolis</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-3">Ohio</td>
-                <td class="border border-slate-300">Columbus</td>
-                <td class="border border-slate-300">Indianapolis</td>
-                <td class="border border-slate-300">Indianapolis</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-3">Michigan</td>
-                <td class="border border-slate-300">Indianapolis</td>
-                <td class="border border-slate-300">Detroit</td>
-                <td class="border border-slate-300">Indianapolis</td>
-              </tr>
-            </tbody>
-        </table>
-
+              <thead class="">
+                <tr>
+                  <th class="border border-slate-300 font-bold text-slate-600 py-2">ID</th>
+                  <th class="border border-slate-300 font-bold text-slate-600">User</th>
+                  <th class="border border-slate-300 font-bold text-slate-600">Status</th>
+                  <th class="border border-slate-300 font-bold text-slate-600">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="user in userapi" :key="user.id">
+                  <td class="border border-slate-300 text-slate-500 py-3">{{user.id.slice(0,2)}}</td>
+                  <td class="border border-slate-300 text-slate-500">{{user.username}}</td>
+                  <td class="border border-slate-300 text-slate-500">Indianapolis</td>
+                  <td class="border border-slate-300 text-slate-500">Indianapolis</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div class="usercol"></div>
-      <div class="footer w-full h-[4%] fixed bottom-0">
-        <div class="absolute top-1/2 -translate-y-1/2 px-3 text-slate-800/80">© Copy right 2022</div>
+      <div class="footer w-full h-[5%] flex-none fixed bottom-0">
+        <div class="absolute top-1/2 -translate-y-1/2 px-8 text-slate-800/80">© Copyright 2022</div>
       </div>
     </div>
 
@@ -163,7 +147,16 @@
 
 </style>
 <script>
+import axios from 'axios'
 export default {
-  name: 'IndexPage'
+  async fetch(){
+    await axios.get("https://fiilm-back.herokuapp.com/user")
+                .then( res => {
+                  this.userapi=res.data
+                  console.log(this.userapi)
+                })
+  },
+  name: 'IndexPage',
+  userapi:[]
 }
 </script>
