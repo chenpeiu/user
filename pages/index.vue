@@ -1,7 +1,7 @@
 <template>
-  <div class="userpage flex h-screen w-screen overflow-hidden">
+  <div class="userpage flex h-screen w-screen ">
     <div class="sidebar_left h-screen w-1/6 bg-cyan-800 text-white px-4 overflow-y-auto hidden lg:block">
-      <div class="logo text-center text-2xl py-5">
+      <div class="logo text-left text-2xl py-5">
         <fa :icon='["fas" , "star-of-david"]' />
         <span class="font-semibold font-['Lobster'] tracking-widest">VueBord</span>
       </div>
@@ -79,17 +79,13 @@
       </div>
       <div class="midbar h-[87%] overflow-y-auto">
         <div class="wrap m-auto py-[20px] w-[95%] relative">
-          <div class="text">
-            <span class="text-gray-500">Dashboard{{newname}}</span>
-            <fa :icon='["fas" , "angle-right"]' class="px-2 text-cyan-800"/>
-            <div class="addbar flex items-center bg-white absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden ">
-              <label for="adduser" class="px-2 text-cyan-800">New User</label>
-              <input type="text" id="adduser" class="focus:outline-none pr-2 py-1" v-model.lazy="newname">
-              <fa :icon='["fas" , "circle-plus"]' class="px-2 text-cyan-800 cursor-pointer bg-white "/>
-            </div>
+          <div class="addbar px-3 flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max">
+            <label for="adduser" class="pr-3 bg-cyan-800 text-gray-200/90">New User</label>
+            <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white" v-model="newname" @keydown.enter="adduser"/> 
+            <fa :icon='["fas" , "circle-plus"]' class="px-2 bg-cyan-800 text-gray-200/80 cursor-pointer" @click="adduser"/>
           </div>
-          <div class="items flex flex-col my-5 lg:flex-row ">
-            <div class="item w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max ">
+          <div class="items flex flex-col my-5 mt-10 lg:flex-row ">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
@@ -98,7 +94,7 @@
                 <div class="text-slate-500 font-semibold">New Users</div>
               </div>
             </div>
-            <div class="item w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-up"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-rose-600/80"/>
               </div>
@@ -107,7 +103,7 @@
                 <div class="text-slate-500 font-semibold">Total Orders</div>
               </div>
             </div>
-            <div class="item w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-xmark"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
               </div>
@@ -146,7 +142,11 @@
         <div class="absolute top-1/2 -translate-y-1/2 px-8 text-slate-800/80 text-sm">© Copyright 2022</div>
       </div>
     </div>
-
+    <div v-if="isdone==false" class="fixed w-screen h-screen bg-gray-500/50">
+      <div class="absolute left-1/2 top-1/2 -tranlate-x-1/2 -tranlate-y-1/2">
+        <fa :icon='["fas" , "spinner"]' class="animate-spin text-white text-lg" />
+      </div>
+    </div>
   </div>
 </template>
 <style lang="sass">
@@ -163,13 +163,6 @@
 import axios from 'axios'
 export default {
   async fetch(){
-    // await axios.post("https://fiilm-back.herokuapp.com/user",{
-    //             "username": this.newname
-    //             })
-    // await axios.delete("https://fiilm-back.herokuapp.com/user",{
-    //             data: {"username": "",
-    //                   "id": this.delid}
-    //             })
     await axios.get("https://fiilm-back.herokuapp.com/user")
                 .then( res => {
                   this.userapi=res.data
@@ -178,10 +171,11 @@ export default {
   },
   data(){
     return {
-    searchitem:'',
-    newname: '',
-    delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
-    userapi:[],
+      searchitem:'',
+      newname: '',
+      delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
+      userapi:[],
+      isdone: true,
     }
   },
   computed:{
@@ -190,7 +184,25 @@ export default {
     }
   },
   methods:{
-
+    async adduser(){
+      if (this.newname!=""){
+        await axios.post("https://fiilm-back.herokuapp.com/user",{
+          "username": this.newname
+        })
+        this.isdone=false
+        this.newname=""
+        await axios.get("https://fiilm-back.herokuapp.com/user")
+                    .then( res => this.userapi=res.data)
+        this.isdone=true
+      }
+    },
+    async deluser(id){
+      await axios.delete("https://fiilm-back.herokuapp.com/user?user_id="+id)
+      this.isdone=false
+      await axios.get("https://fiilm-back.herokuapp.com/user")
+                  .then(res=> this.userapi=res.data)
+      this.isdone=true
+    }
   }
 }
 </script>
