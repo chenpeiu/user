@@ -1,63 +1,63 @@
 <template>
   <div class="userpage flex h-screen w-screen ">
     <div class="sidebar_left h-screen w-1/6 bg-cyan-800 text-white px-4 overflow-y-auto hidden lg:block">
-      <div class="logo text-center text-2xl py-5">
-        <!-- <fa :icon='["fas" , "star-of-david"]' /> -->
-        <span class="font-semibold font-['Lobster'] tracking-widest">VueBoard</span>
+      <div class="logo text-left text-2xl py-5">
+        <fa :icon='["fas" , "star-of-david"]' />
+        <span class="font-semibold font-['Lobster'] tracking-widest">VueBord</span>
       </div>
       <ul class="">General
-          <a href="">
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=1" :class="{active:isactive==1}">
               <fa :icon='["fas" , "heart"]' class="pr-3"/>
               <span>Dashboard</span>
             </li>
-          </a>
+          </NuxtLink>
       </ul>
       <ul class="">Excampls
-          <a href="">
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=2" :class="{active:isactive==2}">
               <fa :icon='["fas" , "chess-queen"]' class="pr-3"/>
               <span>UI Element</span>
             </li>
-          </a>
-          <a href="">
+          </NuxtLink>
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=3" :class="{active:isactive==3}">
               <fa :icon='["fas" , "flag"]' class="pr-3"/>
               <span>Tables</span>
             </li>
-          </a>
-          <a href="">
+          </NuxtLink>
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=8" :class="{active:isactive==8}">
               <fa :icon='["fas" , "cloud-arrow-down"]' class="pr-3"/>
               <span>Forms</span>
             </li>
-          </a>
-          <a href="">
+          </NuxtLink>
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=4" :class="{active:isactive==4}">
               <fa :icon='["fas" , "comment-sms"]' class="pr-3"/>
               <span>Cards</span>
             </li>
-          </a>
+          </NuxtLink>
           <NuxtLink to="/product">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=5" :class="{active:isactive==5}">
               <fa :icon='["fas" , "cubes"]' class="pr-3"/>
               <span>Product</span>
             </li>
           </NuxtLink>
-          <a href="">
+          <NuxtLink to="/">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=6" :class="{active:isactive==6}">
               <fa :icon='["fas" , "elevator"]' class="pr-3"/>
               <span>Github</span>
            </li>
-          </a>
+          </NuxtLink>
       </ul>
       <ul class="">About        
-        <a href="">
+        <NuxtLink to="/">
           <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=7" :class="{active:isactive==7}">
             <fa :icon='["fas" , "file-circle-check"]' class="pr-3"/>
             <span>Model</span>
           </li>  
-        </a>
+        </NuxtLink>
       </ul>
     </div>
     <div class="sidebar_right h-screen flex-col bg-slate-200 w-full lg:w-5/6">
@@ -77,15 +77,15 @@
           </div>
         </div>
       </div>
-      <div class="midbar h-[87%] overflow-y-auto flex-col">
+      <div class="midbar h-[87%] overflow-y-auto">
         <div class="wrap m-auto py-[20px] w-[95%] relative">
-          <div class="addbar px-3 lg:w-[26%] flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max w-full">
+          <div class="addbar px-3 flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max">
             <label for="adduser" class="pr-3 bg-cyan-800 text-gray-200/90">New User</label>
-            <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white " autocomplete="off" v-model="newname" @keydown.enter="adduser"/> 
-            <fa :icon='["fas" , "circle-plus"]' class="px-3 bg-cyan-800 text-gray-200/80 cursor-pointer absolute right-0 " @click="adduser"/>
+            <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white" v-model="newname" @keydown.enter="adduser"/> 
+            <fa :icon='["fas" , "circle-plus"]' class="px-2 bg-cyan-800 text-gray-200/80 cursor-pointer" @click="adduser"/>
           </div>
           <div class="items flex flex-col my-5 mt-10 lg:flex-row ">
-            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative my-3 ">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
@@ -94,7 +94,7 @@
                 <div class="text-slate-500 font-semibold">New Users</div>
               </div>
             </div>
-            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-0 lg:m-3">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-up"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-rose-600/80"/>
               </div>
@@ -103,7 +103,7 @@
                 <div class="text-slate-500 font-semibold">Total Orders</div>
               </div>
             </div>
-            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative my-3 ">
+            <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-xmark"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
               </div>
@@ -176,7 +176,7 @@ export default {
       delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
       userapi:[],
       isdone: true,
-      isactive: '',
+      isactive: 5,
     }
   },
   computed:{
