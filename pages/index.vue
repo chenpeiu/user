@@ -181,7 +181,15 @@ export default {
   computed:{
     showuser(){
       return this.userapi.filter( item => item.username.match(this.searchitem))
-    }
+    },
+    expect(){
+      const sum=0
+      for(let i=0;i<this.productapi.data.length;i++){
+        sum+=this.productapi.data[i].price
+      }
+      console.log(sum)
+      return sum
+    },
   },
   methods:{
     async adduser(){

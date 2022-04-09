@@ -1,8 +1,7 @@
 <template>
   <div class="userpage flex h-screen w-screen ">
     <div class="sidebar_left h-screen w-1/6 bg-cyan-800 text-white px-4 overflow-y-auto hidden lg:block">
-      <div class="logo text-left text-2xl py-5">
-        <fa :icon='["fas" , "star-of-david"]' />
+      <div class="logo text-center text-2xl py-5">
         <span class="font-semibold font-['Lobster'] tracking-widest">VueBord</span>
       </div>
       <ul class="">General
@@ -79,32 +78,30 @@
       </div>
       <div class="midbar h-[87%] overflow-y-auto">
         <div class="wrap m-auto py-[20px] w-[95%] relative">
-          <!-- <div class="addbar px-3 flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max"> -->
-            <!-- <label for="adduser" class="pr-3 bg-cyan-800 text-gray-200/90">New User</label> -->
-            <!-- <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white" v-model="newname" @keydown.enter="adduser"/>  -->
-            <!-- <fa :icon='["fas" , "circle-plus"]' class="px-2 bg-cyan-800 text-gray-200/80 cursor-pointer" @click="adduser"/> -->
-          <!-- </div> -->
-          <div class="items flex flex-col my-5 mt-10 lg:flex-row ">
+          <button class="addbar p-3 px-5 bg-cyan-800 text-white absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max" @click="additem=true"> 
+            Add New Item
+          </button>
+          <div class="items flex flex-col my-5 mt-14 lg:flex-row ">
             <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
-              <div class="icon">
-                <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
+              <div class="icon mr-3">
+                <fa :icon='["fas" , "basket-shopping"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{productapi.length}}</div>
-                <div class="text-slate-500 font-semibold">New Users</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{productapi.data.length}}</div>
+                <div class="text-slate-500 font-semibold">Products</div>
               </div>
             </div>
             <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
-              <div class="icon">
-                <fa :icon='["fas" , "circle-up"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-rose-600/80"/>
+              <div class="icon mr-3">
+                <fa :icon='["fas" , "cart-shopping"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-rose-600/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">728</div>
-                <div class="text-slate-500 font-semibold">Total Orders</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">12</div>
+                <div class="text-slate-500 font-semibold">Total</div>
               </div>
             </div>
             <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
-              <div class="icon">
+              <div class="icon mr-3">
                 <fa :icon='["fas" , "circle-xmark"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
               </div>
               <div class="tex ml-[90px]">
@@ -117,25 +114,31 @@
             <table class="w-full rounded-xl bg-white text-center shadow overflow-hidden">
               <thead class="bg-gray-300 ">
                 <tr>
-                  <th class="border-b-2 font-bold text-slate-600 py-3">ID</th>
+                  <th class="border-b-2 font-bold text-slate-600 py-3">Enable</th>
                   <th class="border-b-2 font-bold text-slate-600">Item</th>
                   <th class="border-b-2 font-bold text-slate-600">Category</th>
                   <th class="border-b-2 font-bold text-slate-600">Price</th>
+                  <th class="border-b-2 font-bold text-slate-600"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="product in productapi" :key="product.id">
-                  <td class="text-slate-500 border-b border-gray-300 py-5">{{product.id}}</td>
+                <tr v-for="product in productapi.data" :key="product.id">
+                  <td class="text-slate-500 border-b border-gray-300 py-5">
+                    <div v-if="product.enabled==true" @click="product.enabled=!product.enabled"><fa :icon='["fas" , "circle-check"]' class="text-teal-600 cursor-pointer text-2xl"/></div>
+                    <div v-if="product.enabled==false" @click="product.enabled=!product.enabled"><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 cursor-pointer text-2xl"/></div>
+                  </td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.title}}</td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.category}}</td>
-                  <td class="text-slate-500 border-b border-gray-300 flex items-center">
-                    <div class="mr-5">
+                  <td class="text-slate-500 border-b border-gray-300">
+                    <div class="text-center">
                       <div>價格：{{product.price}}/{{product.unit}}</div>
                       <div>原價：{{product.origin_price}}/{{product.unit}}</div>
                     </div>
+                  </td>
+                  <td class="text-slate-500 border-b border-gray-300">
                     <div>
-                      <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer"/>
-                      <fa :icon='["fas" , "trash-can"]' @click="deluser(product.id)" class="text-rose-800 cursor-pointer"/>
+                      <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer mr-3"/>
+                      <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-rose-800 cursor-pointer"/>
                     </div>
                   </td>
                 </tr>
@@ -151,6 +154,53 @@
     <div v-if="isdone==false" class="fixed w-screen h-screen bg-gray-500/50">
       <div class="absolute left-1/2 top-1/2 -tranlate-x-1/2 -tranlate-y-1/2">
         <fa :icon='["fas" , "spinner"]' class="animate-spin text-white text-lg" />
+      </div>
+    </div>
+    <div v-if="additem==true" class="fixed top-0 right-0 left-0 bottom-0 bg-gray-200/30 backdrop-blur-[2px] border-2 border-cyan-900">
+      <div class="p-8 fixed top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-cyan-600 rounded-xl drop-shadow-xl" >
+        <div class="wrap absolute top-1/2 -translate-y-1/2 w-[91%] border-b-4 border-dashed border-cyan-900">
+          <div class="add">
+            <div class="mb-2.5">
+              <label for="name" class="text-white text-xl flex-row items-center">Name:</label>
+              <input type="text" id="name" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800 " v-model="newproduct.title"> 
+            </div>
+            <div class="mb-2.5">
+              <label for="category" class="text-white text-xl flex-row items-center">Category:</label>
+                <select name="Category" class="bg-cyan-200 rounded-md p-1 ml-2 text-cyan-900" > 
+                  <option value=" " disabled selected> 選擇商品種類</option>
+                  <option value="3Ｃ類">3Ｃ類</option>
+                  <option value="家具">家俱</option>
+                  <option value="電玩">電玩</option>
+                  <option value="擺設">擺設</option>
+                  <option value="服飾" >服飾</option>
+                </select>
+            </div>
+            <div class="mb-2.5">
+              <label for="content" class="text-white text-xl flex-row items-center">Content:</label>
+              <input type="text" id="content" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.content"> 
+            </div>
+            <div class="mb-2.5">
+              <label class="text-white text-xl flex-row items-center">Enabled:</label>
+              <input type="radio" value=True name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> True
+              <input type="radio" value=False name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> False
+            </div>
+            <div class="mb-2.5">
+              <label for="origin_price" class="text-white text-xl flex-row items-center">Origin_price:</label>
+              <input type="text" id="origin_price" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.origin_price"> 
+            </div>
+            <div class="mb-2.5">
+              <label for="origin_price" class="text-white text-xl flex-row items-center">Price:</label>
+              <input type="text" id="origin_price" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.price"> 
+            </div>
+            <div class="mb-2.5">
+              <label for="unit" class="text-white text-xl flex-row items-center">Unit:</label>
+              <input type="text" id="unit" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.unit"> 
+            </div>
+          </div>
+          <div class="check block w-full text-right text-4xl " @click="additem=false">
+            <button><fa :icon='["fas" , "cart-plus"]' class="p-3 pb-0 text-white hover:text-cyan-900 duration-150 hover:translate-x-3"/></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -179,17 +229,36 @@ export default {
   data(){
     return {
       searchitem:'',
-      newname: '',
       productapi:[],
       isdone: true,
       isactive: 5,
+      additem: true,
+      newproduct:{
+        title: null,
+        category: null,
+        content: null,
+        description: null,
+        imageUrl: [],
+        enabled:  true, 
+        origin_price: null,
+        price: null,
+        unit: null,
+      },
     }
   },
-  // computed:{
-  //   showuser(){
-  //     return this.userapi.filter( item => item.username.match(this.searchitem))
-  //   }
-  // },
+  computed:{
+    // showuser(){
+    //   return this.userapi.filter( item => item.username.match(this.searchitem))
+    // },
+    expectincome(){
+      const sum=0
+      for(let i=0;i<this.productapi.data.length;i++){
+        sum+=this.productapi.data[i].price
+      }
+      console.log(sum)
+      return sum
+    },
+  },
   methods:{
   //   async adduser(){
   //     if (this.newname!=""){
@@ -203,11 +272,16 @@ export default {
   //       this.isdone=true
   //     }
   //   },
-    async deluser(id){
-      await axios.delete("https://fiilm-back.herokuapp.com/user?user_id="+id)
+    async delitem(id){
+      let header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDoIhOkJBYR0D4Xleu3Sqa`}
+      await axios({
+        method: "delete",
+        url: "https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/admin/ec/product/"+id,
+        headers: header,
+      }),
       this.isdone=false
-      await axios.get("https://fiilm-back.herokuapp.com/user")
-                  .then(res=> this.userapi=res.data)
+      await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
+                  .then( res =>this.productapi=res.data)
       this.isdone=true
     }
   }
