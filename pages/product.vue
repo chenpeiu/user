@@ -79,18 +79,18 @@
       </div>
       <div class="midbar h-[87%] overflow-y-auto">
         <div class="wrap m-auto py-[20px] w-[95%] relative">
-          <div class="addbar px-3 flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max">
-            <label for="adduser" class="pr-3 bg-cyan-800 text-gray-200/90">New User</label>
-            <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white" v-model="newname" @keydown.enter="adduser"/> 
-            <fa :icon='["fas" , "circle-plus"]' class="px-2 bg-cyan-800 text-gray-200/80 cursor-pointer" @click="adduser"/>
-          </div>
+          <!-- <div class="addbar px-3 flex items-center bg-cyan-800 absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max"> -->
+            <!-- <label for="adduser" class="pr-3 bg-cyan-800 text-gray-200/90">New User</label> -->
+            <!-- <input type="text" id="adduser" class="focus:outline-none pr-2 py-1 bg-cyan-800 text-white" v-model="newname" @keydown.enter="adduser"/>  -->
+            <!-- <fa :icon='["fas" , "circle-plus"]' class="px-2 bg-cyan-800 text-gray-200/80 cursor-pointer" @click="adduser"/> -->
+          <!-- </div> -->
           <div class="items flex flex-col my-5 mt-10 lg:flex-row ">
             <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon">
                 <fa :icon='["fas" , "circle-user"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{userapi.length}}</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{productapi.length}}</div>
                 <div class="text-slate-500 font-semibold">New Users</div>
               </div>
             </div>
@@ -118,19 +118,25 @@
               <thead class="bg-gray-300 ">
                 <tr>
                   <th class="border-b-2 font-bold text-slate-600 py-3">ID</th>
-                  <th class="border-b-2 font-bold text-slate-600">User</th>
-                  <th class="border-b-2 font-bold text-slate-600">Status</th>
-                  <th class="border-b-2 font-bold text-slate-600">Role</th>
+                  <th class="border-b-2 font-bold text-slate-600">Item</th>
+                  <th class="border-b-2 font-bold text-slate-600">Category</th>
+                  <th class="border-b-2 font-bold text-slate-600">Price</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="user in showuser" :key="user.id">
-                  <td class="text-slate-500 border-b border-gray-300 py-5">{{user.id.slice(0,2)}}</td>
-                  <td class="text-slate-500 border-b border-gray-300 ">{{user.username}}</td>
-                  <td class="text-slate-500 border-b border-gray-300 ">Indianapolis</td>
-                  <td class="text-slate-500 border-b border-gray-300  tracking-[1em]">
-                    <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer mr-2"/>
-                    <fa :icon='["fas" , "trash-can"]' @click="deluser(user.id)" class="text-rose-800 cursor-pointer"/>
+                <tr v-for="product in productapi" :key="product.id">
+                  <td class="text-slate-500 border-b border-gray-300 py-5">{{product.id}}</td>
+                  <td class="text-slate-500 border-b border-gray-300 ">{{product.title}}</td>
+                  <td class="text-slate-500 border-b border-gray-300 ">{{product.category}}</td>
+                  <td class="text-slate-500 border-b border-gray-300 flex items-center">
+                    <div class="mr-5">
+                      <div>價格：{{product.price}}/{{product.unit}}</div>
+                      <div>原價：{{product.origin_price}}/{{product.unit}}</div>
+                    </div>
+                    <div>
+                      <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer"/>
+                      <fa :icon='["fas" , "trash-can"]' @click="deluser(product.id)" class="text-rose-800 cursor-pointer"/>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -163,40 +169,40 @@
 import axios from 'axios'
 export default {
   async fetch(){
-    await axios.get("https://fiilm-back.herokuapp.com/user")
+    await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
                 .then( res => {
-                  this.userapi=res.data
-                  console.log(this.userapi)
+                  this.productapi=res.data
+                  console.log(this.productapi)
                 })
   },
+
   data(){
     return {
       searchitem:'',
       newname: '',
-      delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
-      userapi:[],
+      productapi:[],
       isdone: true,
       isactive: 5,
     }
   },
-  computed:{
-    showuser(){
-      return this.userapi.filter( item => item.username.match(this.searchitem))
-    }
-  },
+  // computed:{
+  //   showuser(){
+  //     return this.userapi.filter( item => item.username.match(this.searchitem))
+  //   }
+  // },
   methods:{
-    async adduser(){
-      if (this.newname!=""){
-        await axios.post("https://fiilm-back.herokuapp.com/user",{
-          "username": this.newname
-        })
-        this.isdone=false
-        this.newname=""
-        await axios.get("https://fiilm-back.herokuapp.com/user")
-                    .then( res => this.userapi=res.data)
-        this.isdone=true
-      }
-    },
+  //   async adduser(){
+  //     if (this.newname!=""){
+  //       await axios.post("https://fiilm-back.herokuapp.com/user",{
+  //         "username": this.newname
+  //       })
+  //       this.isdone=false
+  //       this.newname=""
+  //       await axios.get("https://fiilm-back.herokuapp.com/user")
+  //                   .then( res => this.userapi=res.data)
+  //       this.isdone=true
+  //     }
+  //   },
     async deluser(id){
       await axios.delete("https://fiilm-back.herokuapp.com/user?user_id="+id)
       this.isdone=false

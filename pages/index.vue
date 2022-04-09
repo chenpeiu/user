@@ -173,7 +173,6 @@ export default {
     return {
       searchitem:'',
       newname: '',
-      delid: "98c8b4dd-6495-4393-8fa7-a48ee9c83810",
       userapi:[],
       isdone: true,
       isactive: '',
