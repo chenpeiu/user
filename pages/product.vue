@@ -104,10 +104,10 @@
             </div>
             <div class="item lg:w-1/3 flex bg-white rounded-xl p-3 pl-5 shadow relative m-3  min-w-max">
               <div class="icon mr-3">
-                <fa :icon='["fas" , "circle-xmark"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
+                <fa :icon='["fas" , "circle-check"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2  text-orange-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">63</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider">{{availableitem}}</div>
                 <div class="text-slate-500 font-semibold">Available Products</div>
               </div>
             </div>
@@ -133,13 +133,13 @@
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.category}}</td>
                   <td class="text-slate-500 border-b border-gray-300">
                     <div class="text-center">
-                      <div>價格：{{product.price}}/{{product.unit}}</div>
+                      <div>售價：{{product.price}}/{{product.unit}}</div>
                       <div>原價：{{product.origin_price}}/{{product.unit}}</div>
                     </div>
                   </td>
                   <td class="text-slate-500 border-b border-gray-300">
                     <div>
-                      <fa :icon='["fas" , "pen-to-square"]' class="text-teal-600 cursor-pointer mr-3"/>
+                      <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-teal-600 cursor-pointer mr-3" @click="showdetail(product.id)"/>
                       <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-rose-800 cursor-pointer"/>
                     </div>
                   </td>
@@ -192,8 +192,8 @@
             </div>
             <div class="mb-2.5">
               <label class="inline-block w-1/5 text-white text-xl flex-row items-center">Enabled:</label>
-              <input type="radio" value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> True
-              <input type="radio" value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> False
+              <input type="radio" :value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> True
+              <input type="radio" :value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> False
             </div>
             <div class="mb-2.5">
               <label for="origin_price" class="inline-block w-1/5 text-white text-xl flex-row items-center">Origin_price:</label>
@@ -216,6 +216,42 @@
         </div>
       </div>
     </div>
+    <div v-if="isshowdetail==true" class="fixed top-0 right-0 left-0 bottom-0 bg-slate-800/50" @click="isshowdetail=false"></div>
+    <div v-if="isshowdetail==true" class="detail p-3 flex w-1/2 rounded-lg bg-cyan-900 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+      <div class="w-1/2 text-left text-white"> 
+        <div class="text-lg leading-10 mb-2 ">產品名稱：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.title">
+        </div>
+        <div class="text-lg leading-10 mb-2">產品分類：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.category">
+        </div>
+        <div class="text-lg leading-10 mb-2 ">產品敘述：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white " v-model="current.content">
+        </div>
+        <div class="text-lg leading-10 mb-2 ">產品說明：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.description">
+        </div>
+        <div class="text-lg leading-10 mb-2 ">上架狀態：
+          <input type="radio" :value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> True
+          <input type="radio" :value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> False
+        </div>
+        <div class="text-lg leading-10 mb-2 ">產品原價：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.origin_price">
+        </div>
+        <div class="text-lg leading-10 mb-2 ">產品售價：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.price">
+        </div>
+        <div class="text-lg leading-10 mb-2 ">產品售價：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.unit">
+        </div>
+        <button class="w-[89%] bg-white rounded-md text-center text-cyan-900 py-1 mt-2 hover:bg-gray-200">
+          <fa :icon='["fas" , "circle-check"]' class="text-cyan-700 text-lg" />
+        </button>
+      </div>  
+      <div class="pic w-1/2 overflow-hidden ">
+        <img :src=current.imageUrl alt="" class="rounded-md">
+      </div>
+    </div>
   </div>
 </template>
 <style lang="sass">
@@ -232,15 +268,12 @@
 </style>
 <script>
 import axios from 'axios'
+const header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDoIhOkJBYR0D4Xleu3Sqa`}
 export default {
   async fetch(){
-    await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
-                .then( res => {
-                  this.productapi=res.data
-                  console.log(this.productapi)
-                })
+    await this.refresh()
+    console.log(this.productapi)
   },
-
   data(){
     return {
       searchitem:'',
@@ -248,6 +281,7 @@ export default {
       isdone: true,
       isactive: 5,
       additem: false,
+      isshowdetail: false,
       newproduct:{
         title: "",
         category: "",
@@ -259,6 +293,9 @@ export default {
         price: null,
         unit: "",
       },
+      current:{
+        
+      }
     }
   },
   computed:{
@@ -266,28 +303,45 @@ export default {
     //   return this.userapi.filter( item => item.username.match(this.searchitem))
     // },
     expectincome(){
-      let sum=0
-      if (this.productapi.length !=0 ){
+      try{
+        let sum=0
         for(let i=0;i<this.productapi.data.length;i++){
           sum+=this.productapi.data[i].price
-          console.log(sum)
         }
         return sum
       }
-      return 0
+      catch{
+        return 0
+      }
     },
     totalitem(){
-      if(this.productapi.length !=0){
+      try{
         return this.productapi.data.length
       }
-      return 0
+      catch{
+        return 0
+      }
     },
+    availableitem(){
+      try{
+        let available=this.productapi.data.filter(item=>item.enabled==true)
+        return available.length
+      }
+      catch{
+        return 0
+      }
+    }
   },
   methods:{
+    async refresh(){
+      await axios({
+        method:'get',
+        url: 'https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/admin/ec/products',
+        headers:header,
+      }).then(res=>this.productapi=res.data)
+    },
     async addproduct(){
-      console.log(this.newproduct)
       this.isdone=false
-      let header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDoIhOkJBYR0D4Xleu3Sqa`}
       let data=this.newproduct
       await axios({
         method:'post',
@@ -295,8 +349,7 @@ export default {
         data: data,
         headers: header
       }).then(res=>console.log(res)).catch(err=>console.log(err))
-      await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
-                  .then(res=>this.productapi=res.data)
+      await this.refresh()
       this.isdone=true
       this.newproduct.title=""
       this.newproduct.category=""
@@ -308,18 +361,20 @@ export default {
       this.newproduct.price=null
       this.newproduct.unit=""
     },
-
     async delitem(id){
       this.isdone=false
-      let header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDoIhOkJBYR0D4Xleu3Sqa`}
       await axios({
         method: "delete",
         url: "https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/admin/ec/product/"+id,
         headers: header,
       }),
-      await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
-                  .then( res =>this.productapi=res.data)
+      await this.refresh()
       this.isdone=true
+    },
+    showdetail(id){
+      this.current=this.productapi.data.find(item=>item.id==id)
+      console.log(this.current)
+      this.isshowdetail=true
     }
   }
 }
