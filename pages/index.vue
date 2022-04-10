@@ -166,6 +166,7 @@ export default {
     await axios.get("https://fiilm-back.herokuapp.com/user")
                 .then( res => {
                   this.userapi=res.data
+                  this.isdone=true
                   console.log(this.userapi)
                 })
   },
@@ -174,7 +175,7 @@ export default {
       searchitem:'',
       newname: '',
       userapi:[],
-      isdone: true,
+      isdone: false,
       isactive: '',
     }
   },

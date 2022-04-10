@@ -272,13 +272,14 @@ const header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDo
 export default {
   async fetch(){
     await this.refresh()
+    this.isdone=true
     console.log(this.productapi)
   },
   data(){
     return {
       searchitem:'',
       productapi:[],
-      isdone: true,
+      isdone: false,
       isactive: 5,
       additem: false,
       isshowdetail: false,
