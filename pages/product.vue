@@ -87,7 +87,7 @@
                 <fa :icon='["fas" , "basket-shopping"]' class="pr-[30px] text-[70px] absolute top-1/2 -translate-y-1/2 text-pink-500/80"/>
               </div>
               <div class="tex ml-[90px]">
-                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{productapi.data.length}}</div>
+                <div class="number text-slate-700 font-extrabold text-[30px] font-['Lobster'] tracking-wider ">{{totalitem}}</div>
                 <div class="text-slate-500 font-semibold">Products</div>
               </div>
             </div>
@@ -158,9 +158,10 @@
         <fa :icon='["fas" , "spinner"]' class="animate-spin text-white text-lg" />
       </div>
     </div>
-    <div v-if="additem==true" class="fixed top-0 right-0 left-0 bottom-0 bg-gray-200/30 backdrop-blur-[2px] border-2 border-cyan-900">
-      <div class="p-8 pt-14 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-[65%] bg-cyan-600 rounded-xl drop-shadow-xl " >
-        <div class="wrap pt-3 absolute top-1/2 -translate-y-1/2 w-[90%] border-b-4 border-dashed border-cyan-900">
+    <div v-if="additem==true" class="fixed top-0 right-0 left-0 bottom-0 bg-gray-200/30 backdrop-blur-[2px] border-2 border-cyan-900" @click="additem=false"></div>
+    <div v-if="additem==true" >
+      <div class="p-8 pt-14 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-[65%] bg-cyan-600 rounded-xl drop-shadow-xl  overflow-auto" >
+        <div class="wrap pt-3 absolute top-1/2 -translate-y-1/2 w-[90%] border-b-4 border-dashed border-cyan-900 ">
           <div class="add">
             <div class="mb-2.5">
               <label for="name" class="inline-block w-1/5 text-white text-xl flex-row items-center">Name:</label>
@@ -168,7 +169,7 @@
             </div>
             <div class="mb-2.5">
               <label for="category" class="inline-block w-1/5 text-white text-xl flex-row items-center">Category:</label>
-                <select name="Category" class="bg-cyan-200 rounded-md p-1 ml-2 text-cyan-900" > 
+                <select name="Category" class="bg-cyan-200 rounded-md p-1 ml-2 text-cyan-900"  v-model="newproduct.category"> 
                   <option value=" " disabled selected> 選擇商品種類</option>
                   <option value="3Ｃ類">3Ｃ類</option>
                   <option value="家具">家俱</option>
@@ -187,20 +188,20 @@
             </div>
             <div class="mb-2.5">
               <label for="imageUrl" class="inline-block w-1/5 text-white text-xl flex-row items-center">imageUrl:</label>
-              <input type="text" id="imageUrl" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.imageUrl"> 
+              <input type="text" id="imageUrl" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.imageUrl[0]"> 
             </div>
             <div class="mb-2.5">
               <label class="inline-block w-1/5 text-white text-xl flex-row items-center">Enabled:</label>
-              <input type="radio" value=True name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> True
-              <input type="radio" value=False name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> False
+              <input type="radio" value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> True
+              <input type="radio" value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.enabled"> False
             </div>
             <div class="mb-2.5">
               <label for="origin_price" class="inline-block w-1/5 text-white text-xl flex-row items-center">Origin_price:</label>
-              <input type="text" id="origin_price" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.origin_price"> 
+              <input type="text" id="origin_price" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model.number="newproduct.origin_price"> 
             </div>
             <div class="mb-2.5">
               <label for="price" class="inline-block w-1/5 text-white text-xl flex-row items-center">Price:</label>
-              <input type="text" id="price" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.price"> 
+              <input type="text" id="price" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model.number="newproduct.price"> 
             </div>
             <div class="mb-2.5">
               <label for="unit" class="inline-block w-1/5 text-white text-xl flex-row items-center">Unit:</label>
@@ -252,10 +253,10 @@ export default {
         category: "",
         content: "",
         description: "",
-        imageUrl: "",
+        imageUrl: [],
         enabled:  true, 
-        origin_price: "",
-        price: "",
+        origin_price: null,
+        price: null,
         unit: "",
       },
     }
@@ -266,15 +267,25 @@ export default {
     // },
     expectincome(){
       let sum=0
-      for(let i=0;i<this.productapi.data.length;i++){
-        sum+=this.productapi.data[i].price
+      if (this.productapi.length !=0 ){
+        for(let i=0;i<this.productapi.data.length;i++){
+          sum+=this.productapi.data[i].price
+          console.log(sum)
+        }
+        return sum
       }
-      return sum
+      return 0
+    },
+    totalitem(){
+      if(this.productapi.length !=0){
+        return this.productapi.data.length
+      }
+      return 0
     },
   },
   methods:{
     async addproduct(){
-      console.log("newitem"+this.newproduct)
+      console.log(this.newproduct)
       this.isdone=false
       let header={"Authorization": `Bearer 43wG302EwjCySz1DJItW7eqL5gFFZqaQ979V9kSDoIhOkJBYR0D4Xleu3Sqa`}
       let data=this.newproduct
@@ -283,10 +294,19 @@ export default {
         url:'https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/admin/ec/product',
         data: data,
         headers: header
-      })
+      }).then(res=>console.log(res)).catch(err=>console.log(err))
       await axios.get("https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/ec/products")
                   .then(res=>this.productapi=res.data)
       this.isdone=true
+      this.newproduct.title=""
+      this.newproduct.category=""
+      this.newproduct.content=""
+      this.newproduct.description=""
+      this.newproduct.imageUrl=[]
+      this.newproduct.enabled= true
+      this.newproduct.origin_price=null
+      this.newproduct.price=null
+      this.newproduct.unit=""
     },
 
     async delitem(id){
