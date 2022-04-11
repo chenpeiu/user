@@ -126,8 +126,8 @@
               <tbody>
                 <tr v-for="product in productapi.data" :key="product.id">
                   <td class="text-slate-500 border-b border-gray-300 py-5">
-                    <div v-if="product.enabled==true" @click="product.enabled=!product.enabled"><fa :icon='["fas" , "circle-check"]' class="text-teal-600 cursor-pointer text-2xl"/></div>
-                    <div v-if="product.enabled==false" @click="product.enabled=!product.enabled"><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 cursor-pointer text-2xl"/></div>
+                    <div v-if="product.enabled==true" ><fa :icon='["fas" , "circle-check"]' class="text-teal-600 text-2xl"/></div>
+                    <div v-if="product.enabled==false" ><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 text-2xl"/></div>
                   </td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.title}}</td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.category}}</td>
@@ -244,7 +244,7 @@
         <div class="text-lg leading-10 mb-2 ">產品售價：
           <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.unit">
         </div>
-        <button class="w-[89%] bg-white rounded-md text-center text-cyan-900 py-1 mt-2 hover:bg-gray-200">
+        <button class="w-[89%] bg-white rounded-md text-center text-cyan-900 py-1 mt-2 hover:bg-gray-200" @click="updateproduct(current.id)">
           <fa :icon='["fas" , "circle-check"]' class="text-cyan-700 text-lg" />
         </button>
       </div>  
@@ -273,7 +273,7 @@ export default {
   async fetch(){
     await this.refresh()
     this.isdone=true
-    console.log(this.productapi)
+    // console.log(this.productapi)
   },
   data(){
     return {
@@ -294,9 +294,7 @@ export default {
         price: null,
         unit: "",
       },
-      current:{
-        
-      }
+      current:{},
     }
   },
   computed:{
@@ -362,6 +360,18 @@ export default {
       this.newproduct.price=null
       this.newproduct.unit=""
     },
+    async updateproduct(id){
+      let data=this.current
+      await axios({
+        method: 'patch',
+        url: "https://course-ec-api.hexschool.io/api/4e36516d-bd95-49e6-9be0-881d82838857/admin/ec/product/"+id,
+        data: data,
+        headers: header
+      })
+      await this.refresh()
+      this.isshowdetail=false
+
+    },
     async delitem(id){
       this.isdone=false
       await axios({
@@ -374,7 +384,6 @@ export default {
     },
     showdetail(id){
       this.current=this.productapi.data.find(item=>item.id==id)
-      console.log(this.current)
       this.isshowdetail=true
     }
   }
