@@ -183,10 +183,6 @@
               <input type="text" id="content" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.content"> 
             </div>
             <div class="mb-2.5">
-              <label for="description" class="inline-block w-1/5 text-white text-xl flex-row items-center">description:</label>
-              <input type="text" id="description" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.description"> 
-            </div>
-            <div class="mb-2.5">
               <label for="imageUrl" class="inline-block w-1/5 text-white text-xl flex-row items-center">imageUrl:</label>
               <input type="text" id="imageUrl" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.imageUrl[0]"> 
             </div>
@@ -228,8 +224,8 @@
         <div class="text-lg leading-10 mb-2 ">產品敘述：
           <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white " v-model="current.content">
         </div>
-        <div class="text-lg leading-10 mb-2 ">產品說明：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.description">
+        <div class="text-lg leading-10 mb-2 ">產品圖片：
+          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white " v-model="current.imageUrl[0]">
         </div>
         <div class="text-lg leading-10 mb-2 ">上架狀態：
           <input type="radio" :value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> True
@@ -287,7 +283,6 @@ export default {
         title: "",
         category: "",
         content: "",
-        description: "",
         imageUrl: [],
         enabled:  true, 
         origin_price: null,
@@ -353,7 +348,6 @@ export default {
       this.newproduct.title=""
       this.newproduct.category=""
       this.newproduct.content=""
-      this.newproduct.description=""
       this.newproduct.imageUrl=[]
       this.newproduct.enabled= true
       this.newproduct.origin_price=null
@@ -361,6 +355,9 @@ export default {
       this.newproduct.unit=""
     },
     async updateproduct(id){
+      this.isshowdetail=false
+      this.isdone=false
+      
       let data=this.current
       await axios({
         method: 'patch',
@@ -369,7 +366,7 @@ export default {
         headers: header
       })
       await this.refresh()
-      this.isshowdetail=false
+      this.isdone=true
 
     },
     async delitem(id){
