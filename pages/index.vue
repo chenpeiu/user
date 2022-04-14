@@ -2,7 +2,6 @@
   <div class="userpage flex h-screen w-screen ">
     <div class="sidebar_left h-screen w-1/6 bg-cyan-800 text-white px-4 overflow-y-auto hidden lg:block">
       <div class="logo text-center text-2xl py-5">
-        <!-- <fa :icon='["fas" , "star-of-david"]' /> -->
         <span class="font-semibold font-['Lobster'] tracking-widest">VueBoard</span>
       </div>
       <ul class="">General
@@ -32,12 +31,12 @@
               <span>Forms</span>
             </li>
           </a>
-          <a href="">
+          <NuxtLink to="/copy">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=4" :class="{active:isactive==4}">
               <fa :icon='["fas" , "comment-sms"]' class="pr-3"/>
               <span>Cards</span>
             </li>
-          </a>
+          </NuxtLink>
           <NuxtLink to="/product">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=5" :class="{active:isactive==5}">
               <fa :icon='["fas" , "cubes"]' class="pr-3"/>
@@ -61,7 +60,7 @@
       </ul>
     </div>
     <div class="sidebar_right h-screen flex-col bg-slate-200 w-full lg:w-5/6">
-      <div class="topbar w-full h-[8%] flex-none border-b-4 border-cyan-800 ">
+      <div class="topbarright w-full h-[8%] flex-none border-b-4 border-cyan-800">
         <div class="wrap w-[95%] h-full m-auto relative">
           <div class="form flex items-center absolute top-1/2 -translate-y-1/2 px-3 rounded-md border-2 border-cyan-800 ">
             <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500 pr-2" />
@@ -152,6 +151,7 @@
 <style lang="sass">
   body
     min-height: 100px
+    max-height: 800px
     min-width: 1200px
   .active
     background-color: rgba(229,231,235,.3)

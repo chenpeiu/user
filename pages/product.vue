@@ -1,76 +1,22 @@
 <template>
   <div class="userpage flex h-screen w-screen ">
-    <div v-if="additem==false" class="sidebar_left h-screen w-1/6 bg-cyan-800 text-white px-4 overflow-y-auto hidden lg:block">
-      <div class="logo text-center text-2xl py-5">
-        <span class="font-semibold font-['Lobster'] tracking-widest">VueBord</span>
-      </div>
-      <ul class="">General
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=1" :class="{active:isactive==1}">
-              <fa :icon='["fas" , "heart"]' class="pr-3"/>
-              <span>Dashboard</span>
-            </li>
-          </NuxtLink>
-      </ul>
-      <ul class="">Excampls
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=2" :class="{active:isactive==2}">
-              <fa :icon='["fas" , "chess-queen"]' class="pr-3"/>
-              <span>UI Element</span>
-            </li>
-          </NuxtLink>
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=3" :class="{active:isactive==3}">
-              <fa :icon='["fas" , "flag"]' class="pr-3"/>
-              <span>Tables</span>
-            </li>
-          </NuxtLink>
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=8" :class="{active:isactive==8}">
-              <fa :icon='["fas" , "cloud-arrow-down"]' class="pr-3"/>
-              <span>Forms</span>
-            </li>
-          </NuxtLink>
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=4" :class="{active:isactive==4}">
-              <fa :icon='["fas" , "comment-sms"]' class="pr-3"/>
-              <span>Cards</span>
-            </li>
-          </NuxtLink>
-          <NuxtLink to="/product">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=5" :class="{active:isactive==5}">
-              <fa :icon='["fas" , "cubes"]' class="pr-3"/>
-              <span>Product</span>
-            </li>
-          </NuxtLink>
-          <NuxtLink to="/">
-            <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=6" :class="{active:isactive==6}">
-              <fa :icon='["fas" , "elevator"]' class="pr-3"/>
-              <span>Github</span>
-           </li>
-          </NuxtLink>
-      </ul>
-      <ul class="">About        
-        <NuxtLink to="/">
-          <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=7" :class="{active:isactive==7}">
-            <fa :icon='["fas" , "file-circle-check"]' class="pr-3"/>
-            <span>Model</span>
-          </li>  
-        </NuxtLink>
-      </ul>
-    </div>
-    <div class="sidebar_right h-screen flex-col bg-slate-200 w-full lg:w-5/6" :class="{additemright:additem}">
-      <div class="topbar w-full h-[8%] flex-none border-b-4 border-cyan-800 ">
+    <div class="sidebar h-screen flex-col bg-slate-200 w-full" :class="{additemright:additem}">
+      <div class="topbar2 w-full h-[8%] border-b-4 border-green-800 ">
         <div class="wrap w-[95%] h-full m-auto relative">
-          <div class="form flex items-center absolute top-1/2 -translate-y-1/2 px-3 rounded-md border-2 border-cyan-800 ">
+          <NuxtLink to="/">
+            <div  class="logo text-center py-5">
+              <div class="font-semibold font-['Lobster'] tracking-widest text-green-800 text-3xl">VueBoard</div>
+            </div>
+          </NuxtLink>
+          <div class="form flex items-center absolute top-1/2 -translate-y-1/2 px-3 rounded-md border-2 border-green-800 ">
             <fa :icon='["fas" , "magnifying-glass"]' class="text-slate-500 pr-2" />
             <input type="text" class="bg-transparent focus:outline-none py-1 text-slate-600" v-model="searchitem"/>
           </div>
           <div class="usericon flex items-center absolute top-1/2 -translate-y-1/2 right-0">
             <div class="icon px-4">
-              <fa :icon='["fas" , "bell"]' class="text-cyan-800 text-[25px]"/>
+              <fa :icon='["fas" , "bell"]' class="text-green-800 text-[25px]"/>
             </div>
-            <div class="pic bg-white w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-800">
+            <div class="pic bg-white w-10 h-10 rounded-full overflow-hidden border-2 border-green-800">
               <img class="max-w-[130%] mt-[5px] -ml-[6px]" src="https://st.depositphotos.com/1269204/1219/i/600/depositphotos_12196477-stock-photo-smiling-men-isolated-on-the.jpg" alt="">
             </div>
           </div>
@@ -78,7 +24,7 @@
       </div>
       <div class="midbar h-[87%] overflow-y-auto">
         <div class="wrap m-auto py-[20px] w-[95%] relative">
-          <button class="addbar p-3 px-5 bg-cyan-800 text-white absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max" @click="additem=true"> 
+          <button class="addbar p-3 px-5 bg-green-800 text-white absolute left-1/2 -translate-x-1/2 top-[20px] rounded-lg overflow-hidden min-w-max" @click="additem=true"> 
             Add New Product
           </button>
           <div class="items flex flex-col my-5 mt-14 lg:flex-row ">
@@ -126,10 +72,13 @@
               <tbody>
                 <tr v-for="product in productapi.data" :key="product.id">
                   <td class="text-slate-500 border-b border-gray-300 py-5">
-                    <div v-if="product.enabled==true" ><fa :icon='["fas" , "circle-check"]' class="text-teal-600 text-2xl"/></div>
+                    <div v-if="product.enabled==true" ><fa :icon='["fas" , "circle-check"]' class="text-green-600 text-2xl"/></div>
                     <div v-if="product.enabled==false" ><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 text-2xl"/></div>
                   </td>
-                  <td class="text-slate-500 border-b border-gray-300 ">{{product.title}}</td>
+                  <td class="text-slate-500 border-b border-gray-300 ">
+                    <div class="text-lg">{{product.title}}</div>
+                    <div class="text-sm text-slate-500/50">{{product.content}}</div>
+                  </td>
                   <td class="text-slate-500 border-b border-gray-300 ">{{product.category}}</td>
                   <td class="text-slate-500 border-b border-gray-300">
                     <div class="text-center">
@@ -139,7 +88,7 @@
                   </td>
                   <td class="text-slate-500 border-b border-gray-300">
                     <div>
-                      <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-teal-600 cursor-pointer mr-3" @click="showdetail(product.id)"/>
+                      <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-green-700 cursor-pointer mr-3" @click="showdetail(product.id)"/>
                       <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-rose-800 cursor-pointer"/>
                     </div>
                   </td>
@@ -158,10 +107,10 @@
         <fa :icon='["fas" , "spinner"]' class="animate-spin text-white text-lg" />
       </div>
     </div>
-    <div v-if="additem==true" class="fixed top-0 right-0 left-0 bottom-0 bg-gray-200/30 backdrop-blur-[2px] border-2 border-cyan-900" @click="additem=false"></div>
+    <div v-if="additem==true" class="fixed top-0 right-0 left-0 bottom-0 bg-gray-200/30 backdrop-blur-[2px] border-2 border-green-900" @click="additem=false"></div>
     <div v-if="additem==true" >
-      <div class="p-8 pt-14 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-[65%] bg-cyan-600 rounded-xl drop-shadow-xl  overflow-auto" >
-        <div class="wrap pt-3 absolute top-1/2 -translate-y-1/2 w-[90%] border-b-4 border-dashed border-cyan-900 ">
+      <div class="p-8 pt-14 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-[65%] bg-green-800 rounded-xl drop-shadow-xl  overflow-auto" >
+        <div class="wrap pt-3 absolute top-1/2 -translate-y-1/2 w-[90%] border-b-4 border-dashed border-green-900 ">
           <div class="add">
             <div class="mb-2.5">
               <label for="name" class="inline-block w-1/5 text-white text-xl flex-row items-center">Name:</label>
@@ -169,13 +118,13 @@
             </div>
             <div class="mb-2.5">
               <label for="category" class="inline-block w-1/5 text-white text-xl flex-row items-center">Category:</label>
-                <select name="Category" class="bg-cyan-200 rounded-md p-1 ml-2 text-cyan-900"  v-model="newproduct.category"> 
+                <select name="Category" class="bg-green-200 rounded-md p-1 ml-2 text-green-900"  v-model="newproduct.category"> 
                   <option value=" " disabled selected> 選擇商品種類</option>
-                  <option value="3Ｃ類">3Ｃ類</option>
-                  <option value="家具">家俱</option>
-                  <option value="電玩">電玩</option>
-                  <option value="擺設">擺設</option>
-                  <option value="服飾" >服飾</option>
+                  <option value="3Ｃ類">麵包</option>
+                  <option value="家具">輕食</option>
+                  <option value="電玩">蛋糕</option>
+                  <option value="擺設">飲品</option>
+                  <option value="服飾" >禮卡</option>
                 </select>
             </div>
             <div class="mb-2.5">
@@ -206,42 +155,42 @@
           </div>
           <div class="check block w-full text-right " @click="additem=false & addproduct()">
             <button>
-              <fa :icon='["fas" , "cart-plus"]' class=" text-4xl p-3 pb-0 text-white hover:text-cyan-900 duration-150 hover:translate-x-3"/>
+              <fa :icon='["fas","cart-plus"]' class=" text-4xl p-3 pb-0 text-white translate-x-0 hover:text-green-900 duration-150 hover:translate-x-3"/>
             </button>
           </div>
         </div>
       </div>
     </div>
     <div v-if="isshowdetail==true" class="fixed top-0 right-0 left-0 bottom-0 bg-slate-800/50" @click="isshowdetail=false"></div>
-    <div v-if="isshowdetail==true" class="detail p-3 flex w-1/2 rounded-lg bg-cyan-900 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+    <div v-if="isshowdetail==true" class="detail p-3 flex w-1/2 rounded-lg bg-green-900 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
       <div class="w-1/2 text-left text-white"> 
         <div class="text-lg leading-10 mb-2 ">產品名稱：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.title">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.title">
         </div>
         <div class="text-lg leading-10 mb-2">產品分類：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.category">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.category">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品敘述：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white " v-model="current.content">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white " v-model="current.content">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品圖片：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white " v-model="current.imageUrl[0]">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white " v-model="current.imageUrl[0]">
         </div>
         <div class="text-lg leading-10 mb-2 ">上架狀態：
           <input type="radio" :value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> True
           <input type="radio" :value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> False
         </div>
         <div class="text-lg leading-10 mb-2 ">產品原價：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.origin_price">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.origin_price">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品售價：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.price">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.price">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品售價：
-          <input type="text" class="bg-cyan-600/80 px-2 rounded-md text-white" v-model="current.unit">
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.unit">
         </div>
-        <button class="w-[89%] bg-white rounded-md text-center text-cyan-900 py-1 mt-2 hover:bg-gray-200" @click="updateproduct(current.id)">
-          <fa :icon='["fas" , "circle-check"]' class="text-cyan-700 text-lg" />
+        <button class="w-[89%] bg-white rounded-md text-center text-green-900 py-1 mt-2 hover:bg-gray-200" @click="updateproduct(current.id)">
+          <fa :icon='["fas" , "circle-check"]' class="text-green-700 text-lg" />
         </button>
       </div>  
       <div class="pic w-1/2 overflow-hidden ">
@@ -251,8 +200,11 @@
   </div>
 </template>
 <style lang="sass">
+  html,body
+
   body
     min-height: 100px
+    max-height: 560px
     min-width: 1200px
   .active
     background-color: rgba(229,231,235,.3)
