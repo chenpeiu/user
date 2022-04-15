@@ -4,8 +4,8 @@
       <div class="topbar2 w-full h-[8%] border-b-4 border-green-800 ">
         <div class="wrap w-[95%] h-full m-auto relative">
           <NuxtLink to="/">
-            <div  class="logo text-center py-5">
-              <div class="font-semibold font-['Lobster'] tracking-widest text-green-800 text-3xl">VueBoard</div>
+            <div class="logo w-[50px] h-[50px]  m-auto pt-1">
+              <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/b/bf/Starbucks_Coffee.svg/1200px-Starbucks_Coffee.svg.png" alt="" class="w-full">
             </div>
           </NuxtLink>
           <div class="form flex items-center absolute top-1/2 -translate-y-1/2 px-3 rounded-md border-2 border-green-800 ">
@@ -128,8 +128,12 @@
                 </select>
             </div>
             <div class="mb-2.5">
-              <label for="content" class="inline-block w-1/5 text-white text-xl flex-row items-center">Content:</label>
+              <label for="content" class="inline-block w-1/5 text-white text-xl flex-row items-center">EglishName:</label>
               <input type="text" id="content" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.content"> 
+            </div>
+            <div class="mb-2.5">
+              <label for="description" class="inline-block w-1/5 text-white text-xl flex-row items-center">description:</label>
+              <input type="text" id="description" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.description"> 
             </div>
             <div class="mb-2.5">
               <label for="imageUrl" class="inline-block w-1/5 text-white text-xl flex-row items-center">imageUrl:</label>
@@ -173,12 +177,12 @@
         <div class="text-lg leading-10 mb-2 ">產品敘述：
           <input type="text" class="bg-green-600/80 px-2 rounded-md text-white " v-model="current.content">
         </div>
-        <div class="text-lg leading-10 mb-2 ">產品圖片：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white " v-model="current.imageUrl[0]">
+        <div class="text-lg leading-10 mb-2 ">產品說明：
+          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.description">
         </div>
         <div class="text-lg leading-10 mb-2 ">上架狀態：
-          <input type="radio" :value=true name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> True
-          <input type="radio" :value=false name="Enabled" class="p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="current.enabled"> False
+          <input type="radio" :value=true name="Enabled" class="p-1 ml-2 " v-model="current.enabled"> True
+          <input type="radio" :value=false name="Enabled" class="p-1 ml-2 " v-model="current.enabled"> False
         </div>
         <div class="text-lg leading-10 mb-2 ">產品原價：
           <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.origin_price">
@@ -200,7 +204,6 @@
   </div>
 </template>
 <style lang="sass">
-  html,body
 
   body
     min-height: 100px
@@ -235,6 +238,7 @@ export default {
         title: "",
         category: "",
         content: "",
+        description: "",
         imageUrl: [],
         enabled:  true, 
         origin_price: null,
@@ -300,6 +304,7 @@ export default {
       this.newproduct.title=""
       this.newproduct.category=""
       this.newproduct.content=""
+      this.newproduct.description=""
       this.newproduct.imageUrl=[]
       this.newproduct.enabled= true
       this.newproduct.origin_price=null
@@ -307,9 +312,6 @@ export default {
       this.newproduct.unit=""
     },
     async updateproduct(id){
-      this.isshowdetail=false
-      this.isdone=false
-      
       let data=this.current
       await axios({
         method: 'patch',
@@ -318,7 +320,7 @@ export default {
         headers: header
       })
       await this.refresh()
-      this.isdone=true
+      this.isshowdetail=false
 
     },
     async delitem(id){

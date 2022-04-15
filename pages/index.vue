@@ -169,6 +169,10 @@ export default {
                   this.isdone=true
                   console.log(this.userapi)
                 })
+                .catch( err =>{
+                  this.userapi=[]
+                  this.isdone=true
+                })
   },
   data(){
     return {
