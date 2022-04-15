@@ -63,6 +63,7 @@
               <thead class="bg-gray-300 ">
                 <tr>
                   <th class="border-b-2 font-bold text-slate-600 py-3">Enable</th>
+                  <th class="border-b-2 font-bold text-slate-600">Image</th>
                   <th class="border-b-2 font-bold text-slate-600">Item</th>
                   <th class="border-b-2 font-bold text-slate-600">Category</th>
                   <th class="border-b-2 font-bold text-slate-600">Price</th>
@@ -75,7 +76,12 @@
                     <div v-if="product.enabled==true" ><fa :icon='["fas" , "circle-check"]' class="text-green-600 text-2xl"/></div>
                     <div v-if="product.enabled==false" ><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 text-2xl"/></div>
                   </td>
-                  <td class="text-slate-500 border-b border-gray-300 ">
+                  <td class="text-slate-500 border-b border-gray-300 w-1/6 ">
+                    <div class="pic w-2/3 bg-green-200 m-auto">
+                      <img :src="product.imageUrl" alt="" class="w-full">
+                    </div>                    
+                  </td>
+                  <td class="text-slate-500 border-b border-gray-300 w-1/6">
                     <div class="text-lg">{{product.title}}</div>
                     <div class="text-sm text-slate-500/50">{{product.content}}</div>
                   </td>
@@ -86,7 +92,7 @@
                       <div>原價：{{product.origin_price}}/{{product.unit}}</div>
                     </div>
                   </td>
-                  <td class="text-slate-500 border-b border-gray-300">
+                  <td class="text-slate-500 border-b border-gray-300  w-1/8">
                     <div>
                       <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-green-700 cursor-pointer mr-3" @click="showdetail(product.id)"/>
                       <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-rose-800 cursor-pointer"/>
@@ -120,11 +126,11 @@
               <label for="category" class="inline-block w-1/5 text-white text-xl flex-row items-center">Category:</label>
                 <select name="Category" class="bg-green-200 rounded-md p-1 ml-2 text-green-900"  v-model="newproduct.category"> 
                   <option value=" " disabled selected> 選擇商品種類</option>
-                  <option value="3Ｃ類">麵包</option>
-                  <option value="家具">輕食</option>
-                  <option value="電玩">蛋糕</option>
-                  <option value="擺設">飲品</option>
-                  <option value="服飾" >禮卡</option>
+                  <option value="麵包">麵包</option>
+                  <option value="輕食">輕食</option>
+                  <option value="蛋糕">蛋糕</option>
+                  <option value="飲品">飲品</option>
+                  <option value="禮品">禮品</option>
                 </select>
             </div>
             <div class="mb-2.5">
@@ -132,11 +138,11 @@
               <input type="text" id="content" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.content"> 
             </div>
             <div class="mb-2.5">
-              <label for="description" class="inline-block w-1/5 text-white text-xl flex-row items-center">description:</label>
+              <label for="description" class="inline-block w-1/5 text-white text-xl flex-row items-center">Description:</label>
               <input type="text" id="description" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.description"> 
             </div>
             <div class="mb-2.5">
-              <label for="imageUrl" class="inline-block w-1/5 text-white text-xl flex-row items-center">imageUrl:</label>
+              <label for="imageUrl" class="inline-block w-1/5 text-white text-xl flex-row items-center">ImageUrl:</label>
               <input type="text" id="imageUrl" class="w-3/5 p-1 bg-transparent border-2 border-white rounded-md ml-2 text-slate-800" v-model="newproduct.imageUrl[0]"> 
             </div>
             <div class="mb-2.5">
@@ -169,32 +175,32 @@
     <div v-if="isshowdetail==true" class="detail p-3 flex w-1/2 rounded-lg bg-green-900 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
       <div class="w-1/2 text-left text-white"> 
         <div class="text-lg leading-10 mb-2 ">產品名稱：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.title">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.title">
         </div>
         <div class="text-lg leading-10 mb-2">產品分類：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.category">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.category">
         </div>
-        <div class="text-lg leading-10 mb-2 ">產品敘述：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white " v-model="current.content">
+        <div class="text-lg leading-10 mb-2 ">英文名稱：
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white " v-model="current.content">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品說明：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.description">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.description">
         </div>
         <div class="text-lg leading-10 mb-2 ">上架狀態：
           <input type="radio" :value=true name="Enabled" class="p-1 ml-2 " v-model="current.enabled"> True
           <input type="radio" :value=false name="Enabled" class="p-1 ml-2 " v-model="current.enabled"> False
         </div>
         <div class="text-lg leading-10 mb-2 ">產品原價：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.origin_price">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.origin_price">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品售價：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.price">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.price">
         </div>
         <div class="text-lg leading-10 mb-2 ">產品售價：
-          <input type="text" class="bg-green-600/80 px-2 rounded-md text-white" v-model="current.unit">
+          <input type="text" class="bg-green-400/20 px-2 rounded-md text-white" v-model="current.unit">
         </div>
-        <button class="w-[89%] bg-white rounded-md text-center text-green-900 py-1 mt-2 hover:bg-gray-200" @click="updateproduct(current.id)">
-          <fa :icon='["fas" , "circle-check"]' class="text-green-700 text-lg" />
+        <button class="w-[89%] rounded-md py-1 mt-2 bg-slate-100 text-center text-green-900 text-lg hover:bg-gray-300" @click="updateproduct(current.id)">
+          <fa :icon='["fas" , "circle-check"]' class="" />
         </button>
       </div>  
       <div class="pic w-1/2 overflow-hidden ">
@@ -234,6 +240,7 @@ export default {
       isactive: 5,
       additem: false,
       isshowdetail: false,
+      sorttype:"",
       newproduct:{
         title: "",
         category: "",
