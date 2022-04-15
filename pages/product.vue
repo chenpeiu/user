@@ -86,8 +86,8 @@
                   </td>
                   <td class="text-slate-500 border-b border-gray-300  w-1/8">
                     <div>
-                      <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-green-700 cursor-pointer mr-3" @click="showdetail(product.id)"/>
-                      <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-rose-800 cursor-pointer"/>
+                      <fa :icon='["fas" , "magnifying-glass-plus"]' class="text-lg text-green-700 cursor-pointer mr-2" @click="showdetail(product.id)"/>
+                      <fa :icon='["fas" , "trash-can"]' @click="delitem(product.id)" class="text-lg text-rose-800 cursor-pointer"/>
                     </div>
                   </td>
                 </tr>
@@ -284,14 +284,18 @@ export default {
     sortarray(){
       try{
         if(this.issort==true){
-          let result=this.productapi.data.sort((a,b)=>a[this.sorttype]-b[this.sorttype])
-          console.log(result)
-          return result
+          // let result=this.productapi.data.sort((a,b)=>a[this.sorttype]-b[this.sorttype])
+          return this.productapi.data.sort((a,b)=>{
+            if (a[this.sorttype]>b[this.sorttype]) {return 1}
+            else {return -1}
+          })
         }
         else{
-          let result=this.productapi.data.sort((a,b)=>b[this.sorttype]-a[this.sorttype])
-          console.log(result)
-          return result
+          // let result=this.productapi.data.sort((a,b)=>b[this.sorttype]-a[this.sorttype])
+          return this.productapi.data.sort((a,b)=>{
+            if (a[this.sorttype]>b[this.sorttype]){return -1}
+            else {return 1}
+          })
         }
       }
       catch{
@@ -358,7 +362,7 @@ export default {
         this.issort=!this.issort
       }
       else{
-        this.issort=!this.issort
+        // this.issort=!this.issort
         this.sorttype=type
       }
     }
