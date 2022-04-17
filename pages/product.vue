@@ -69,8 +69,8 @@
                     <div v-if="product.enabled==false" ><fa :icon='["fas" , "circle-xmark"]' class="text-rose-500 text-2xl"/></div>
                   </td>
                   <td class="text-slate-500 border-b border-gray-300 w-1/6 ">
-                    <div class="pic w-2/3 bg-green-200 m-auto">
-                      <img :src="product.imageUrl" alt="" class="w-full">
+                    <div class="pic w-2/3 bg-slate-200 m-auto">
+                      <img :src="product.imageUrl" alt="" class="w-full rounded-md shadow-md ">
                     </div>                    
                   </td>
                   <td class="text-slate-500 border-b border-gray-300 w-1/6">

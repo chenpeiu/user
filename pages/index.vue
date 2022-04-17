@@ -25,12 +25,12 @@
               <span>Tables</span>
             </li>
           </a>
-          <a href="">
+          <NuxtLink to="/sea">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=8" :class="{active:isactive==8}">
               <fa :icon='["fas" , "cloud-arrow-down"]' class="pr-3"/>
-              <span>Forms</span>
+              <span>Sea</span>
             </li>
-          </a>
+          </NuxtLink>
           <NuxtLink to="/copy">
             <li class="pl-7 py-3 -mx-4 hover:bg-gray-200/30" @click="isactive=4" :class="{active:isactive==4}">
               <fa :icon='["fas" , "comment-sms"]' class="pr-3"/>

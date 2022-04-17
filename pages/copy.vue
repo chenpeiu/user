@@ -11,7 +11,7 @@
         <div class="px-4 text-sm" >未來 FUTURE</div>
       </div>
     </nav>
-    <div class="topbar h-[600px] bg-slate-200 bg-cover bg-fixed ">
+    <div class="topbar h-[600px] bg-slate-200 bg-cover bg-fixed " style="background-image:url(https://awiclass.monoame.com/img/web1_print/print.jpeg)">
       <div class="wrap h-full flex justify-center items-center">
         <div class="txt text-center">
           <div class="text-5xl font-extrabold text-white">印刷術，知識的複製與革命</div>
@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="section_impact bg-black flex text-white h-[300px] ">
-      <div class="pic w-2/5 bg-center"></div>
+      <div class="pic w-2/5 bg-center" style="background-image: url(https://awiclass.monoame.com/img/web1_print/map.gif)"></div>
       <div class="text w-3/5 text-center flex flex-col items-center py-2 mx-8">
         <div class="w-full py-2 mb-2 border-b border-white text-xl">印刷對知識傳播的影響</div>
         <div class="icons w-full flex justify-around py-8">
@@ -126,11 +126,9 @@
     box-sizing: border-box
     padding: 0
     margin: 0
-  .topbar
-    background-image: url(https://awiclass.monoame.com/img/web1_print/print.jpeg)
+
   .section_impact
     .pic
-      background-image: url(https://awiclass.monoame.com/img/web1_print/map.gif)
       background-size: 100% auto
   
 
