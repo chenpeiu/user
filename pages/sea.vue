@@ -78,11 +78,24 @@
         </div>
       </div>
     </div>
+
+    <div class="flex">
+      <div class="bg-cyan-600/50">
+        <div class="imgleft">You will</div>
+      </div>
+      <div class="imgright">
+        <div class="layer">
+          <span class="imgright">
+            SEA
+          </span>
+        </div>
+      </div>
+    </div>
     <div class="bottombar py-20 flex justify-center items-center bg-sky-900 text-white">
       <div class="tex text-center">
         <div class="text-3xl font-bold">你對海有什麼想像呢?</div>
         <div class="py-2 text-slate-300/50">說說關於你，關於海洋，關於世界的故事</div>
-        <input type="text" class="focus:outline-none rounded-md bg-transparent border border-white px-2">
+        <input type="text" class="focus:outline-none rounded-md bg-transparent border border-white px-2 py-1">
       </div>
     </div>
 
@@ -122,7 +135,39 @@
       //     justify-content: center
       //     align-items: center
       //     z-index: 0
-
+  .imgleft
+    width: 50vw
+    height: 50vh
+    background: url("https://cdn.britannica.com/48/172748-131-287B3EAC/wave-ocean-sea-waves-hurricane-cyclone-storm.jpg") no-repeat center center
+    background-size: cover
+    font-size: 150px
+    text-align: center
+    line-height: 50vh
+    font-weight: bold
+    font-family: 'Lobster', cursive
+    color: transparent
+    -webkit-background-clip: text
+    background-clip: text
+  .imgright
+    display: block
+    width: 50vw
+    height: 50vh
+    background: url("https://media.wired.com/photos/5bb6accf0abf932caf294b18/master/pass/waves-730260985.jpg") no-repeat center center
+    background-size: cover
+    .layer
+      background: rgba(255,255,255,0.7)
+      width: 50vw
+      height: 50vh
+      .imgright
+        -webkit-background-clip: text
+        background-clip: text
+        font-size: 150px
+        text-align: center
+        line-height: 50vh
+        letter-spacing: 5px
+        font-weight: bold
+        color: transparent
+        font-family: 'Lobster', cursive
 
 
 </style>
